@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>HTTP Status Code Demo</title>
+</head>
+<body>
+    <h1>HTTP Status Code Demonstration</h1>
+    <div id="buttons">
+        <button onclick="makeRequest('ok')">200 OK</button>
+        <button onclick="makeRequest('created', 'POST')">201 Created</button>
+        <button onclick="makeRequest('bad-request')">400 Bad Request</button>
+        <button onclick="makeRequest('unauthorized')">401 Unauthorized</button>
+        <button onclick="makeRequest('forbidden')">403 Forbidden</button>
+        <button onclick="makeRequest('not-found')">404 Not Found</button>
+        <button onclick="makeRequest('conflict')">409 Conflict</button>
+        <button onclick="makeRequest('server-error')">500 Internal Server Error</button>
+        <button onclick="makeRequest('service-unavailable')">503 Service Unavailable</button>
+    </div>
+
+    <h3>Response:</h3>
+    <pre id="display">Click a button to see the response...</pre>
+
+    <script>
+        async function makeRequest(endpoint, method = 'GET') {
+            const display = document.getElementById('display');
+            try {
+                const response = await fetch(`http://localhost:3001/api/${endpoint}`, { method });
+                const data = await response.json();
+                display.innerText = JSON.stringify(data, null, 2);
+            } catch (error) {
+                display.innerText = "Error: Could not connect to server.";
+            }
+        }
+    </script>
+</body>
+</html>
